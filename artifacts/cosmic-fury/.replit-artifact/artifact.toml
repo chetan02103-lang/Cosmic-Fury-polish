@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Cosmic Fury"
+description = "A polished arcade space shooter with a cinematic command deck, reactive gameplay, ship progression, upgrades, missions, and replayable runs."
+version = "1.0.0"
+id = "artifacts/cosmic-fury"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24897
+
+[services.development]
+run = "pnpm --filter @workspace/cosmic-fury run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cosmic-fury", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/cosmic-fury/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24897"
+BASE_PATH = "/"
